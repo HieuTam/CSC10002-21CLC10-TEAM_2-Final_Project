@@ -116,7 +116,7 @@ void ChangePassword(Schoolyear* YearCur, teacher* Staff, int x, int NumOfStaff);
 <<<<<<< HEAD
 void inputSchoolYear(Schoolyear* &YearCur);
 
-void SchoolYearInfo(Schoolyear* YearCur);
+void SchoolYearSemesterDate(Schoolyear* YearCur);
 =======
 void AddNewSemester(Schoolyear*& YearCur, int& x);
 
