@@ -52,8 +52,8 @@ void LoadScoreboard(Course*& CourseHead, Schoolyear*& YearCur)
 				InfoCur = InfoCur->pNext;
 
 			}
-			if (InfoCur == nullptr) cout << "Export successfully";
-			else cout << "Export fail";
+			if (InfoCur == nullptr) cout << "Import successfully";
+			else cout << "Import fail";
 		}
 
 	}
