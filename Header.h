@@ -66,7 +66,7 @@ struct Semester
 {
 	Course* pCourse = nullptr;
 	string StartSem;
-	date StartReg, EndReg, EndSem;;
+	date StartReg, EndReg, EndSem;
 };
 
 
@@ -93,5 +93,7 @@ int CheckLogin(string username, string password, Schoolyear*& YearCur, teacher* 
 
 void ChangePassword(Schoolyear* YearCur, teacher* Staff, int x, int NumOfStaff);
 
-void inputSchoolYear(Schoolyear* YearCur);
+void inputSchoolYear(Schoolyear* &YearCur);
+
+void SchoolYearInfo(Schoolyear* YearCur);
 
