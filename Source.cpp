@@ -306,19 +306,4 @@ void ExportListStudentCourse(Course* CourseHead)
 	{
 		CourseCur = CourseCur->pNext;
 	}
-
-	if (CourseCur != nullptr)
-	{
-		Data* InfoCur = CourseCur->DataOfStu;
-		int i = 1;
-		while (InfoCur != nullptr)
-		{
-			output << i << ',' << InfoCur->StudentID << ',' << InfoCur->Surname << ',' << InfoCur->Name << endl;
-			InfoCur = InfoCur->pNext;
-		}
-
-		if (InfoCur == nullptr) cout << "Export successfully!";
-		else cout << "Export fail";
-	}
-	output.close();
 }
