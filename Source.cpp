@@ -1,7 +1,113 @@
 ﻿#include "Header.h"
 
 
+void txtColor(int color) // khai bao bang mau
+{
+	HANDLE hConsoleColor;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+}
 
+void gotoxy(int x, int y)
+{
+	static HANDLE h = NULL;
+	if (!h)
+		h = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD c = { x, y };
+	SetConsoleCursorPosition(h, c);
+}
+
+
+void Draw(int x) // ham dung de ke o vuong phan dang nhap
+{
+	gotoxy(49, x);
+	cout << char(218);
+	for (int i = 0; i < 30; i++)
+		cout << char(196);
+	cout << char(191);
+	gotoxy(49, x + 1); cout << char(179);
+	gotoxy(80, x + 1); cout << char(179);
+	gotoxy(49, x + 2);
+	cout << char(192);
+	for (int i = 0; i < 30; i++)
+		cout << char(196);
+	cout << char(217);
+}
+
+void clear()
+{
+	for (int i = 2; i < 118; ++i)    // lap day khung menu = khoang trang
+		for (int j = 6; j < 39; ++j)
+		{
+			gotoxy(i, j);
+			cout << char(32);
+		}
+	txtColor(7);
+}
+
+void ShowCur(bool CursorVisibility)
+{
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO ConCurInf;
+
+	ConCurInf.dwSize = 10;
+	ConCurInf.bVisible = CursorVisibility;
+
+	SetConsoleCursorInfo(handle, &ConCurInf);
+}
+
+void Back() // nut tro lai
+{
+	gotoxy(4, 6);
+	cout << "Back";
+	char keycap = 0;
+	while (keycap != 13)
+	{
+		ShowCur(0);
+		keycap = getch();
+	}
+	ShowCur(1);
+}
+
+void DisableCtrButton(bool Max)
+{
+	HWND hWnd = GetConsoleWindow();
+	HMENU hMenu = GetSystemMenu(hWnd, false);
+
+	if (Max == 1)
+	{
+		DeleteMenu(hMenu, SC_MAXIMIZE, MF_BYCOMMAND);
+	}
+}
+
+void DisableResizeWindow()
+{
+	HWND hWnd = GetConsoleWindow();
+	SetWindowLong(hWnd, GWL_STYLE, GetWindowLong(hWnd, GWL_STYLE) & ~WS_SIZEBOX);
+}
+
+void SetWindowSize(SHORT width, SHORT height)
+{
+	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	SMALL_RECT WindowSize;
+	WindowSize.Top = 0;
+	WindowSize.Left = 0;
+	WindowSize.Right = width;
+	WindowSize.Bottom = height;
+
+	SetConsoleWindowInfo(hStdout, 1, &WindowSize);
+}
+
+void SetScreenBufferSize(SHORT width, SHORT height)
+{
+	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	COORD NewSize;
+	NewSize.X = width;
+	NewSize.Y = height;
+
+	SetConsoleScreenBufferSize(hStdout, NewSize);
+}
 
 void FillPassword(string& password, int k)
 {
@@ -55,7 +161,6 @@ void InputUserAndPW(string& username, string& password)
 
 }
 
-
 int CheckLogin(string username, string password, Schoolyear*& YearCur, teacher* Staff, int NumOfStaff, Student* stu, int NumOfStu)
 { // ham kiem tra phan dang nhap
 	if (username[0] >= 'a' && username[0] <= 'z')
@@ -79,6 +184,22 @@ int CheckLogin(string username, string password, Schoolyear*& YearCur, teacher* 
 				return (i + 1)*100;
 		}
 		return 0;
+		/*if (username[1] >= 48 && username[1] <= 57)
+		{
+			int x = ((int)username[0] - 48) * 10 + (int)username[1] - 48;
+			while (YearCur != nullptr && x != ((((int)YearCur->NumOfYear[2]) - 48) * 10 + ((int)YearCur->NumOfYear[3] - 48)))
+				YearCur = YearCur->YearNext;
+			if (YearCur == nullptr) return 0;
+			else
+			{
+				for (int i = 0; i < YearCur->NumOfClass; i++)
+					for (int j = 0; j < YearCur->CLass[i].NumOfStudent; j++)
+						if (username == YearCur->CLass[i].Stu[j].StudentID && YearCur->CLass[i].Stu[j].PassWord == password)
+							return (i + 1) * 100 + j + 1;
+				return 0;
+			}
+		}
+		else return 0;*/
 	}
 	else return 0;
 }
@@ -122,6 +243,7 @@ void InputStudents(Student*& St, int& NumOfStu)
 
 }
 
+<<<<<<< HEAD
 
 
 
@@ -129,3 +251,69 @@ void InputStudents(Student*& St, int& NumOfStu)
 
 
 
+=======
+//gotoxy xong
+void ChangePassword(Schoolyear* YearCur, teacher* Staff, int x, int NumOfStaff)
+{
+	string password;
+	while (true)
+	{
+		clear();
+		gotoxy(24, 12); cout << "Enter your new password:";
+		gotoxy(22, 15); cout << "Reenter your new password:";
+		Draw(11);
+		Draw(14);
+		FillPassword(password, 12);
+		string temp;
+		FillPassword(temp, 15);
+		if (temp != password)
+		{
+			gotoxy(51, 17);
+			txtColor(4);
+			cout << "Password does not match!";
+			txtColor(7);
+			password = "";
+		}
+		else break;
+	}
+	if (x < 100) Staff[x - 1].PassWord = password;
+	else YearCur->CLass[x / 100 - 1].Stu[x % 100 - 1].PassWord = password;
+	if (x < 100)
+	{
+		ofstream out("StaffData.csv", ios::trunc);
+		out << NumOfStaff << ",,,,," << endl;
+		for (int i = 0; i < NumOfStaff; i++)
+		{
+			out << Staff[i].Surname << "," << Staff[i].Name << "," << Staff[i].Gender << "," << Staff[i].Email << "," << Staff[i].Account << "," << Staff[i].PassWord << endl;
+		}
+	}
+	else
+	{
+		ofstream out(YearCur->CLass[x / 100 - 1].NameOfClass + ".csv", ios::trunc);
+		out << YearCur->CLass[x / 100 - 1].NumOfStudent << ",,,,,,," << endl;
+		for (int i = 0; i < YearCur->CLass[x / 100 - 1].NumOfStudent; i++)
+		{
+			out << YearCur->CLass[x / 100 - 1].Stu[i].Num << "," << YearCur->CLass[x / 100 - 1].Stu[i].StudentID << "," << YearCur->CLass[x / 100 - 1].Stu[i].Surname << ","
+				<< YearCur->CLass[x / 100 - 1].Stu[i].Name << "," << YearCur->CLass[x / 100 - 1].Stu[i].Gender << "," << YearCur->CLass[x / 100 - 1].Stu[i].DOB << ","
+				<< YearCur->CLass[x / 100 - 1].Stu[i].ID << "," << YearCur->CLass[x / 100 - 1].Stu[i].PassWord << endl;
+		}
+	}
+	gotoxy(51, 17);
+	txtColor(2);
+	cout << "Your password was changed successfully." << endl;
+	txtColor(7);
+}
+void ExportListStudentCourse(Course* CourseHead)
+{
+	string CourseID;
+	ofstream output;
+	Course* CourseCur = CourseHead;
+	cout << "Input course ID: ";
+	getline(cin, CourseID);
+	output.open(CourseID + ".csv", ofstream::out);
+	while (CourseCur != nullptr && CourseCur->CourseID != CourseID)
+	{
+		CourseCur = CourseCur->pNext;
+	}
+}
+>>>>>>> 3fc58b20fa6f8cf1c607a935dfb0a7ad8eb1f370

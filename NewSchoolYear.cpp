@@ -1,4 +1,4 @@
-#include "header.h"
+#include "Header.h"
 
 void inputSchoolYear(Schoolyear* &YearHead)
 {
@@ -25,12 +25,15 @@ void inputSchoolYear(Schoolyear* &YearHead)
 	SchoolYearInfo(YearCur->YearNext);
 }
 
-void SchoolYearInfo(Schoolyear* YearCur){
-	for (int i=0; i<3; i++){
+void SchoolYearSemester(Schoolyear* YearCur, int n){
+	for (int i=0; i<n; i++){
 		cout << "Enter the beginning date of the registeration of semester " << i+1 << ": ";
 		cin >> YearCur->Sem[i].StartReg.day >> YearCur->Sem[i].StartReg.month >> YearCur->Sem[i].StartReg.year;
 		cout << "Enter the end date of the registeration of semester " << i+1 << ": ";
 		cin >> YearCur->Sem[i].EndReg.day >> YearCur->Sem[i].EndReg.month >> YearCur->Sem[i].EndReg.year;
+		cout << "Enter the beginning date of semester " << i+1
 	}
 }
+
+
 
