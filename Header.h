@@ -93,5 +93,5 @@ int CheckLogin(string username, string password, Schoolyear*& YearCur, teacher* 
 
 void ChangePassword(Schoolyear* YearCur, teacher* Staff, int x, int NumOfStaff);
 
-
+void inputSchoolYear(Schoolyear* YearCur);
 
