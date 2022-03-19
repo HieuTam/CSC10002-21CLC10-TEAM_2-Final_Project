@@ -66,7 +66,7 @@ struct Semester
 {
 	Course* pCourse = nullptr;
 	string StartSem;
-	date StartReg, EndReg, EndSem;;
+	date StartReg, EndReg, EndSem;
 };
 
 
@@ -108,5 +108,57 @@ int CheckLogin(string username, string password, Schoolyear*& YearCur, teacher* 
 
 void ChangePassword(Schoolyear* YearCur, teacher* Staff, int x, int NumOfStaff);
 
+<<<<<<< HEAD
 
 
+=======
+<<<<<<< HEAD
+void inputSchoolYear(Schoolyear* &YearCur);
+
+void SchoolYearSemesterDate(Schoolyear* YearCur);
+=======
+void AddNewSemester(Schoolyear*& YearCur, int& x);
+
+void AddNewCourse(Course*& CourseHead);
+
+void ViewCourse(Course* CourseHead, int& t, int& i);
+
+void UpdateCourse(Schoolyear* YearCur, int sem);
+
+void SaveInfoCourse(Schoolyear* YearCur, int sem);
+
+void DeleteCourse(Schoolyear*& YearCur, int sem);
+
+void Now(date& Today);
+
+bool CheckdateRegister(date Today, date StartReg, date EndReg);
+
+bool CheckdateEndSemester(date Today, date EndSem);
+
+bool CheckImport(Schoolyear* YearCur, int x);
+>>>>>>> 3fc58b20fa6f8cf1c607a935dfb0a7ad8eb1f370
+
+void CourseEnroll(Schoolyear* YearCur, Course* CourseHead, int x, int& NumOfOpt);
+//
+//void ViewListEnrolled(Schoolyear* YearCur, int x);
+//
+//void RemoveCourseEnrolled(Schoolyear* YearCur, Course* CourseHead, int x);
+//
+void ViewListClasses(Schoolyear* YearCur);
+//
+//void ViewListStudentInClass(Schoolyear* YearCur);
+//
+//void ViewListStudentInCourse(Schoolyear* YearCur, int sem);
+//
+//void ExportListStudentCourse(Course* CourseHead);
+//
+//void LoadScoreboard(Course*& CourseHead, Schoolyear*& YearCur);
+//
+//void ViewScoreboardCourse(Course* CourseHead);
+//
+//void ViewScoreboardClass(Schoolyear* YearCur, int x);
+//
+//void ViewScoreboardStu(Schoolyear* YearCur, int x);
+//
+//void UpdateStudentResult(Schoolyear*& YearCur, Course*& CourseHead);
+>>>>>>> 98119b95eaaf68f1acabc7c3febe4c0c625f68ff

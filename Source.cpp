@@ -156,7 +156,10 @@ void InputUserAndPW(string& username, string& password)
 
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 98119b95eaaf68f1acabc7c3febe4c0c625f68ff
 int CheckLogin(string username, string password, Schoolyear*& YearCur, teacher* Staff, int NumOfStaff, Student* stu, int NumOfStu)
 { // ham kiem tra phan dang nhap
 	if (username[0] >= 'a' && username[0] <= 'z')
@@ -223,7 +226,20 @@ void InputStudents(Student*& St, int& NumOfStu)
 
 }
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+
+
+
+
+
+
+=======
+//gotoxy xong
+>>>>>>> 98119b95eaaf68f1acabc7c3febe4c0c625f68ff
 void ChangePassword(Schoolyear* YearCur, teacher* Staff, int x, int NumOfStaff)
 {
 	string password;
@@ -269,9 +285,26 @@ void ChangePassword(Schoolyear* YearCur, teacher* Staff, int x, int NumOfStaff)
 	}
 	gotoxy(51, 17);
 }
+<<<<<<< HEAD
 
 
 
 
 
 
+=======
+void ExportListStudentCourse(Course* CourseHead)
+{
+	string CourseID;
+	ofstream output;
+	Course* CourseCur = CourseHead;
+	cout << "Input course ID: ";
+	getline(cin, CourseID);
+	output.open(CourseID + ".csv", ofstream::out);
+	while (CourseCur != nullptr && CourseCur->CourseID != CourseID)
+	{
+		CourseCur = CourseCur->pNext;
+	}
+}
+>>>>>>> 3fc58b20fa6f8cf1c607a935dfb0a7ad8eb1f370
+>>>>>>> 98119b95eaaf68f1acabc7c3febe4c0c625f68ff
