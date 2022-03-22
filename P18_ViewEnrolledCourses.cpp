@@ -1,3 +1,4 @@
+#include "Header.h"
 void ViewListEnrolled(Schoolyear* YearCur, int x)
 {
 	clear();
