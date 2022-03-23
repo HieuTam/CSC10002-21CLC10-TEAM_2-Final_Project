@@ -9,26 +9,28 @@ void RemoveCourseEnrolled(Schoolyear* YearCur, Course* CourseHead, int x)
 	getline(cin, ClassID);
 	cout << "Which semester? ";
 	cin >> i;
+	Course *pCur=YearCur->Sem[i-1].pCourse;
 	do{
 		cout << "Enter the course you want to remove: ";
 		getline(cin, ClassID);
 		cout << "Which semester? ";
 		cin >> i;
-		while (YearCur->Sem[i-1].pCourse!=nullptr){
-			YearCur->Sem[i-1].pCourse=YearCur->Sem[i-1].pCourse->pNext;
+		while (pCur!=nullptr){
+			pCur=pCur->pNext;
 		}	
 		cout << "No classID available. Please try again." << endl;
 		
+		pCur=YearCur->Sem[i-1].pCourse;
 	}
-	while (YearCur->Sem[i-1].pCourse->CourseID!=ClassID);
+	while (pCur->CourseID!=ClassID);
 	
 	CourseHead=YearCur->Sem[i-1].pCourse;
-	
+	cout << "Class found!" << endl;
+	cout << "Before we remove your course, enter your information" << endl;
+	Data *pCur1=CourseHead->DataOfStu;
 	do{
-		cout << "Class found!" << endl;
-		cout << "Before we remove your course"
-		string Student, StudentID, gender, ID;
-		cout << "Input your student name: ";
+		string name, StudentID, surname;
+		cout << "Input your name: ";
 		getline(cin, Student);
 		cout << "Input your ID: ";
 		getline(cin, ID);
@@ -37,6 +39,9 @@ void RemoveCourseEnrolled(Schoolyear* YearCur, Course* CourseHead, int x)
 		cout << "Input your gender: ";
 		getline(cin, gender);
 		
+		while (pCur1!=nullptr){
+			
+		}
 		
 	}
 }
