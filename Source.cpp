@@ -287,6 +287,218 @@ void ChangePassword(Schoolyear* YearCur, teacher* Staff, int x, int NumOfStaff)
 }
 <<<<<<< HEAD
 
+	void AddNewYear(Schoolyear*& NewYear)
+{
+	if (!NewYear) NewYear = new Schoolyear;
+	gotoxy(30, 12);
+	cout << "Input school year: ";
+	Draw(11);
+	gotoxy(51, 12);
+	getline(cin, NewYear->NumOfYear);
+	gotoxy(24, 15);
+	cout << "Input number of classes: ";
+	Draw(14);
+	gotoxy(51, 15);
+	cin >> NewYear->NumOfClass;
+	cin.ignore();
+	NewYear->CLass = new Class[NewYear->NumOfClass];
+	for (int i = 0; i < NewYear->NumOfClass; i++)
+	{
+		while (true)
+		{
+			clear();
+			gotoxy(24, 12);
+			cout << "Input name of the class: ";
+			Draw(11);
+			gotoxy(51, 12);
+			getline(cin, NewYear->CLass[i].NameOfClass);
+			ifstream in(NewYear->CLass[i].NameOfClass + ".csv");
+			if (in.is_open()) break;
+			else
+			{
+				txtColor(4);
+				gotoxy(51, 14);
+				cout << "Can not open files to input data!!!";
+				txtColor(7);
+			}
+		}
+		string temp;
+		ifstream in(NewYear->CLass[i].NameOfClass + ".csv");
+		getline(in, temp, ',');
+		NewYear->CLass[i].NumOfStudent = stoi(temp);
+		NewYear->CLass[i].Stu = new Student[stoi(temp)];
+		getline(in, temp);
+		for (int j = 0; j < NewYear->CLass[i].NumOfStudent; j++)
+		{
+			getline(in, NewYear->CLass[i].Stu[j].Num, ',');
+			getline(in, NewYear->CLass[i].Stu[j].StudentID, ',');
+			getline(in, NewYear->CLass[i].Stu[j].Surname, ',');
+			getline(in, NewYear->CLass[i].Stu[j].Name, ',');
+			getline(in, NewYear->CLass[i].Stu[j].Gender, ',');
+			getline(in, NewYear->CLass[i].Stu[j].DOB, ',');
+			getline(in, NewYear->CLass[i].Stu[j].ID, ',');
+			getline(in, NewYear->CLass[i].Stu[j].PassWord);
+			NewYear->CLass[i].Stu[j].Registered = nullptr;
+		}
+		txtColor(2);
+		gotoxy(51, 14);
+		cout << "Input data of class " << NewYear->CLass[i].NameOfClass << " successfully" << endl;
+		txtColor(7);
+	}
+	NewYear->YearNext = nullptr;
+}
+void AddNewSemester(Schoolyear*& YearCur, int& x)
+{
+	string temp;
+	gotoxy(30, 10);
+	cout << "Input school year: ";
+	Draw(9);
+	gotoxy(51, 10);
+	getline(cin, temp);
+	while (YearCur && temp != YearCur->NumOfYear)
+	{
+		YearCur = YearCur->YearNext;
+	}
+	if (!YearCur)
+	{
+		txtColor(4);
+		gotoxy(51, 12);
+		cout << "This year is not valid." << endl;
+		txtColor(7);
+		return;
+	}
+	gotoxy(33, 13);
+	cout << "Input semester: ";
+	Draw(12);
+	gotoxy(51, 13);
+	cin >> x;
+	cin.ignore();
+	x = x - 1;
+	gotoxy(51, 15);
+	cout << "The dates have form dd/mm/yyyy." << endl;
+	gotoxy(14, 17);
+	cout << "Input start date of this semester: ";
+	Draw(16);
+	gotoxy(51, 17);
+	getline(cin, YearCur->Sem[x].StartSem);
+	gotoxy(16, 20);
+	cout << "Input end date of this semester: ";
+	Draw(19);
+	gotoxy(51, 20);
+	getline(cin, temp);
+	YearCur->Sem[x].EndSem.day = (int)temp[0] * 10 + (int)temp[1] - 528;
+	YearCur->Sem[x].EndSem.month = (int)temp[3] * 10 + (int)temp[4] - 528;
+	YearCur->Sem[x].EndSem.year = (int)temp[6] * 1000 + (int)temp[7] * 100 + (int)temp[8] * 10 + (int)temp[9] - 53328;
+	gotoxy(8, 23);
+	cout << "Input the date start to register course: ";
+	Draw(22);
+	gotoxy(51, 23);
+	getline(cin, temp);
+	YearCur->Sem[x].StartReg.day = (int)temp[0] * 10 + (int)temp[1] - 528;
+	YearCur->Sem[x].StartReg.month = (int)temp[3] * 10 + (int)temp[4] - 528;
+	YearCur->Sem[x].StartReg.year = (int)temp[6] * 1000 + (int)temp[7] * 100 + (int)temp[8] * 10 + (int)temp[9] - 53328;
+	gotoxy(10, 26);
+	cout << "Input the date end to register course: ";
+	Draw(25);
+	gotoxy(51, 26);
+	getline(cin, temp);
+	YearCur->Sem[x].EndReg.day = (int)temp[0] * 10 + (int)temp[1] - 528;
+	YearCur->Sem[x].EndReg.month = (int)temp[3] * 10 + (int)temp[4] - 528;
+	YearCur->Sem[x].EndReg.year = (int)temp[6] * 1000 + (int)temp[7] * 100 + (int)temp[8] * 10 + (int)temp[9] - 53328;
+	ifstream in(YearCur->NumOfYear + "_" + to_string(x + 1) + ".csv");
+	if (!in.is_open())
+	{
+		gotoxy(50, 28);
+		txtColor(4);
+		cout << "Input fail.";
+		txtColor(7);
+	}
+	else
+	{
+		Course* Cur = nullptr;
+		while (!in.eof())
+		{
+			if (!YearCur->Sem[x].pCourse)
+			{
+				YearCur->Sem[x].pCourse = new Course;
+				Cur = YearCur->Sem[x].pCourse;
+			}
+			else
+			{
+				Cur->pNext = new Course;
+				Cur = Cur->pNext;
+			}
+			getline(in, Cur->CourseID, ',');
+			getline(in, Cur->NameOfCourse, ',');
+			getline(in, Cur->NameOfteacher, ',');
+			getline(in, Cur->NumOfCredit, ',');
+			getline(in, Cur->Day1, ',');
+			getline(in, Cur->Session1, ',');
+			getline(in, Cur->Day2, ',');
+			getline(in, Cur->Session2);
+			Cur->NumOfStu = 0;
+			Cur->pNext = nullptr;
+		}
+		txtColor(2);
+		gotoxy(50, 28);
+		cout << "Input successfully.";
+		txtColor(7);
+	}
+
+}
+void AddNewCourse(Course*& CourseHead)
+{
+	Course* temp = new Course;
+	temp->NumOfStu = 0;
+	clear();
+	gotoxy(32, 11);
+	cout << "Input course ID:";
+	Draw(10);
+	gotoxy(51, 11);
+	getline(cin, temp->CourseID);
+	gotoxy(27, 14);
+	cout << "Input name of course:";
+	Draw(13);
+	gotoxy(51, 14);
+	getline(cin, temp->NameOfCourse);
+	gotoxy(28, 17);
+	cout << "Input teacher name:";
+	Draw(16);
+	gotoxy(51, 17);
+	getline(cin, temp->NameOfteacher);
+	gotoxy(24, 20);
+	cout << "Input number of credits:";
+	Draw(19);
+	gotoxy(51, 20);
+	getline(cin, temp->NumOfCredit);
+	gotoxy(36, 23);
+	cout << "Input day 1:";
+	Draw(22);
+	gotoxy(51, 23);
+	getline(cin, temp->Day1);
+	gotoxy(32, 26);
+	cout << "Input session 1:";
+	Draw(25);
+	gotoxy(51, 26);
+	getline(cin, temp->Session1);
+	gotoxy(36, 29);
+	cout << "Input day 2:";
+	Draw(28);
+	gotoxy(51, 29);
+	getline(cin, temp->Day2);
+	gotoxy(32, 32);
+	cout << "Input session 2:";
+	Draw(31);
+	gotoxy(51, 32);
+	getline(cin, temp->Session2);
+	temp->pNext = CourseHead;
+	CourseHead = temp;
+	txtColor(2);
+	gotoxy(51, 34);
+	cout << "Add new course successfully";
+	txtColor(7);
+}
+
 
 
 
