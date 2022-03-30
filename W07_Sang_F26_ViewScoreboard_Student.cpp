@@ -47,7 +47,7 @@ void ViewScoreboardForStudent(Schoolyear* YearCur, int x)
 		gotoxy(80, l);
 		cout << Cur->Score.Total;
 		gotoxy(88, l);
-		cout << "GPA";//nên thêm GPA :>
+		cout << "GPA";//no GPA :>
 		Cur = Cur->pNext;
 	}
 
