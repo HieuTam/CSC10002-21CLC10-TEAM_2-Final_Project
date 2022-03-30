@@ -24,5 +24,7 @@ void ExportListStudentCourse(Course* CourseHead)
 		if (InfoCur == nullptr) cout << "Export successfully!";
 		else cout << "Export fail";
 	}
+	
+	cout << "Hello world!!!";
 
 }
