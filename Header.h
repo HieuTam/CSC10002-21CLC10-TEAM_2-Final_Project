@@ -146,7 +146,7 @@ void RemoveCourseEnrolled(Schoolyear* YearCur, Course* CourseHead, int x);
 
 void ViewListClasses(Schoolyear* YearCur);
 //
-//void ViewListStudentInClass(Schoolyear* YearCur);
+void ViewListStudentInClass(Schoolyear* YearCur);
 //
 //void ViewListStudentInCourse(Schoolyear* YearCur, int sem);
 //
