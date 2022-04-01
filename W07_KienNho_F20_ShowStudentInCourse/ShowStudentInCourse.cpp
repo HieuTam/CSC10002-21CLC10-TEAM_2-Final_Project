@@ -1,6 +1,5 @@
 #include<iostream>
 #include<fstream>
-#include<sstream>
 #include<cstring>
 using namespace std;
 void showStudentsInCourse(){
@@ -9,13 +8,11 @@ void showStudentsInCourse(){
 	cout << "Input course ID: ";
 	getline(cin, CourseID);
 	input.open(CourseID + ".csv", ios::in);
-	char *pTemp =new char[200];
-	while(input>>theWholeName){
-		istringstream buffer( theWholeName );
+	while(input.peek()!=EOF){
 		string stuID,stuName,stuSurName;
-		getline(buffer,stuID,',');
-		getline(buffer,stuName,',');
-		getline(buffer,stuSurName,' ');
+		getline(input,stuID,',');
+		getline(input,stuName,',');
+		getline(input,stuSurName);
 		
 		cout<<stuID<<"\t"<<stuName<<"\t"<<stuSurName<<endl;
 	}
