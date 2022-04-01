@@ -1,0 +1,35 @@
+2
+21CLC01
+2
+1
+Dang Quoc
+Thai
+29/01/2003
+Male
+21127545
+2
+Cao Trung
+Kien
+28/02/2003
+Male
+21124279
+21CLC02
+3
+1
+Tran Nhat 
+Thang
+03/06/2003
+Male
+21122956
+2
+Le Phi
+Anh
+01/02/2003
+Female
+21124563
+3
+Ngo Ngoc
+Lien
+05/03/2003
+Female
+21125402
