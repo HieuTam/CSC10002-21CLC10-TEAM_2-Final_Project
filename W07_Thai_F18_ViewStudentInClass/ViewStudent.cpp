@@ -28,24 +28,26 @@ void ViewListStudentInClass(Schoolyear* YearCur){
 
 int main(){
 	Schoolyear *YearCur=new Schoolyear;
-	ifstream output;
-	output.open("2021-2022.txt");
-	output >> YearCur->NumOfClass;
+	ifstream input;
+	input.open("2021-2022.txt");
+	input >> YearCur->NumOfClass;
 	YearCur->CLass=new Class[YearCur->NumOfClass];
 	for (int i=0; i<YearCur->NumOfClass; i++){
-		output >> YearCur->CLass[i].NameOfClass;
-		output >> YearCur->CLass[i].NumOfStudent;
+		input >> YearCur->CLass[i].NameOfClass;
+		input >> YearCur->CLass[i].NumOfStudent;
 		YearCur->CLass[i].Stu=new Student[YearCur->CLass[i].NumOfStudent];
+		input.ignore(100, '\n');
 		for (int j=0; j<YearCur->CLass[i].NumOfStudent; j++){
-			output >> YearCur->CLass[i].Stu[j].Num;
-			output >> YearCur->CLass[i].Stu[j].Surname;
-			output >> YearCur->CLass[i].Stu[j].Name;
-			output >> YearCur->CLass[i].Stu[j].DOB;
-			output >> YearCur->CLass[i].Stu[j].Gender;
-			output >> YearCur->CLass[i].Stu[j].StudentID;	
+			getline(input, YearCur->CLass[i].Stu[j].Num);
+			getline(input, YearCur->CLass[i].Stu[j].Surname);
+			getline(input, YearCur->CLass[i].Stu[j].Name);
+			getline(input, YearCur->CLass[i].Stu[j].DOB);
+			getline(input, YearCur->CLass[i].Stu[j].Gender);
+			getline(input, YearCur->CLass[i].Stu[j].StudentID);	
 		}
 	}
-
-	output.close();
+	input.close();
 	ViewListStudentInClass(YearCur);
+	delete YearCur;
 }
+
