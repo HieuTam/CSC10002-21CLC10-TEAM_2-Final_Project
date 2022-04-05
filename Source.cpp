@@ -501,7 +501,133 @@ void AddNewCourse(Course*& CourseHead)
 
 
 
+void ViewCourse(Course* CourseHead, int& t, int& i)
+{
+	clear();
+	int k = 1;
+	int y = 11, a = 20;
+	Course* Cur = CourseHead;
+	gotoxy(8, 10);
+	cout << "Course ID";
+	gotoxy(a, 10);
+	a = a + 30;
+	cout << "Name of course";
+	gotoxy(a, 10);
+	a = a + 10;
+	cout << "teacher";
+	gotoxy(a, 10);
+	a = a + 10;
+	cout << "Credits";
+	gotoxy(a, 10);
+	a = a + 22;
+	cout << "Number of Students";
+	gotoxy(a, 10);
+	cout << "Session";
+	while (Cur)
+	{
+		int x = 20;
+		gotoxy(6, y);
+		cout << k;
+		gotoxy(8, y);
+		cout << Cur->CourseID;
+		gotoxy(x, y);
+		x = x + 30;
+		cout << Cur->NameOfCourse;
+		gotoxy(x, y);
+		x = x + 13;
+		cout << Cur->NameOfteacher;
+		gotoxy(x, y);
+		x = x + 14;
+		cout << Cur->NumOfCredit;
+		gotoxy(x, y);
+		x = x + 15;
+		cout << Cur->NumOfStu << "/" << 50;
+		gotoxy(x, y);
+		cout << "Thu " << Cur->Day1 << " Ca " << Cur->Session1 << " Thu " << Cur->Day2 << " Ca " << Cur->Session2;
+		y = y + 1;
+		Cur = Cur->pNext;
+		k++;
+	}
+	t = y;
+	i = k;
+}
 
+void UpdateCourse(Schoolyear* YearCur, int sem)
+{
+	Course* Cur = YearCur->Sem[sem].pCourse;
+	int count = 1, t, option;
+	ViewCourse(YearCur->Sem[sem].pCourse, t, count);
+	t++;
+	gotoxy(12, t);
+	cout << "Enter the course you want to update:";
+	Draw(t - 1);
+	gotoxy(51, t);
+	cin >> option;
+	cin.ignore();
+	Cur = YearCur->Sem[sem].pCourse;
+	for (int i = 1; i < option; i++)
+	{
+		Cur = Cur->pNext;
+	}
+	clear();
+	gotoxy(20, 13);
+	cout << "You are choosing:" << Cur->NameOfCourse;
+	gotoxy(20, 14);
+	cout << "1. Name of teacher. ";
+	gotoxy(20, 15);
+	cout << "2. Number of Credits. ";
+	gotoxy(20, 16);
+	cout << "3. Present students enrolled. ";
+	gotoxy(20, 17);
+	cout << "4. Day 1. ";
+	gotoxy(20, 18);
+	cout << "5. Session 1. ";
+	gotoxy(20, 19);
+	cout << "6. Day 2. ";
+	gotoxy(20, 20);
+	cout << "7. Session 2. ";
+	gotoxy(20, 21);
+	cout << "Enter your option: ";
+	cin >> option;
+	cin.ignore();
+	gotoxy(20, 22);
+	switch (option)
+	{
+	case 1:
+		cout << "Change the name of teacher: ";
+		getline(cin, Cur->NameOfteacher);
+		break;
+	case 2:
+		cout << "Change the number of credits: ";
+		getline(cin, Cur->NumOfCredit);
+		break;
+	case 3:
+		cout << "Change the student enrolled: ";
+		cin >> Cur->NumOfStu;
+		break;
+	case 4:
+		cout << "Change the day 1: ";
+		getline(cin, Cur->Day1);
+		break;
+	case 5:
+		cout << "Change the session 1: ";
+		getline(cin, Cur->Session1);
+		break;
+	case 6:
+		cout << "Change the day 2: ";
+		getline(cin, Cur->Day2);
+		break;
+	case 7:
+		cout << "Change the session 2: ";
+		getline(cin, Cur->Session2);
+		break;
+	default:
+		break;
+	}
+	txtColor(4);
+	cout << "Update course successfully";
+	txtColor(7);
+}
 
 
 =======
