@@ -1,5 +1,7 @@
-void LoadScoreboard(Course*& CourseHead, Schoolyear*& YearCur)
-{	ifstream input;
+#include "Header_Test2.h"
+void LoadScoreboard(Course* CourseHead, Schoolyear* YearCur)
+{
+	ifstream input;
 	string CourseID;
 	Course* CourseCur = CourseHead;
 	Data* InfoCur = nullptr;
@@ -18,10 +20,18 @@ void LoadScoreboard(Course*& CourseHead, Schoolyear*& YearCur)
 			{
 				CourseCur = CourseCur->pNext;
 			}
+			if (CourseCur == nullptr)
+			{
+				cout << "Cannot find this course! Please enter again ";
+				return;
+			}
 
+			if (CourseCur->DataOfStu = nullptr)
+			{
+				cout << "Somehow there is no student in this course?";
+				return;
+			}
 			InfoCur = CourseCur->DataOfStu;
-
-			if (InfoCur == nullptr) return;
 			while (InfoCur != nullptr)
 			{
 				input.ignore(1000, ',');
@@ -34,7 +44,7 @@ void LoadScoreboard(Course*& CourseHead, Schoolyear*& YearCur)
 				getline(input, InfoCur->Score.Other);
 
 
-				Course* EnrollList = YearCur->CLass[InfoCur->j].Stu[InfoCur->k].Registered;
+				Course* EnrollList = YearCur->CLass[InfoCur->StuClass].Stu[InfoCur->IDInClass].Registered;
 
 				while (EnrollList != nullptr && EnrollList->CourseID != CourseCur->CourseID)
 				{
@@ -52,8 +62,8 @@ void LoadScoreboard(Course*& CourseHead, Schoolyear*& YearCur)
 				InfoCur = InfoCur->pNext;
 
 			}
-			if (InfoCur == nullptr) cout << "Import successfully";
-			else cout << "Import fail";
+			if (InfoCur == nullptr) cout << "Imported successfully";
+			else cout << "Imported fail";
 		}
 
 	}
