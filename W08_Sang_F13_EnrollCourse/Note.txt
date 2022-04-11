@@ -1,0 +1,3 @@
+Code enroll để chung với vài hàm nữa nên tui gom lại thành 1 file á, khi nào gộp thì kéo xuống dưới lấy cái hàm
+void CourseEnroll(Schoolyear* YearCur, Course* CourseHead, int x, int& NumOfOpt)
+thôi nha :>
