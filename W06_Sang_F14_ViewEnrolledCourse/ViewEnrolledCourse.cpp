@@ -42,7 +42,9 @@ void ViewListEnrolled(Schoolyear* YearCur, int x)
 			a = a + 22;
 			cout << CurRegistered->NumOfCredit;
 			gotoxy(a, y);
-			cout << "Thu " << CurRegistered->Day1 << "Thoi gian: " << CurRegistered->Session1 << endl;
+			cout << "Thu " << CurRegistered->Day1 << "Thoi gian: " << CurRegistered->Session1;
+			y++;
+			gotoxy(a, y);
 			cout << "Thu " << CurRegistered->Day2 << "Thoi gian: " << CurRegistered->Session2;
 			i++; y++;
 			CurRegistered = CurRegistered->pNext;
