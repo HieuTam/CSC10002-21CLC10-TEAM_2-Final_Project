@@ -16,14 +16,11 @@ void ViewListStudentInClass(Schoolyear* YearCur){
 					cout << YearCur->CLass[i].Stu[j].StudentID << "    " << endl;					
 				}
 					
-				break;
+				return;
 			}
-		}
-	
-	if (YearCur==nullptr){
-		cout << "Schoolyear not found!";
 	}
 	
+	cout << "Class not found!!";
 }
 
 int main(){
