@@ -55,7 +55,6 @@ int main(){
 			getline(in, YearCur->CLass[i].Stu[j].StudentID);
 			getline(in, YearCur->CLass[i].Stu[j].Surname);
 			getline(in, YearCur->CLass[i].Stu[j].Name);
-			cout << YearCur->CLass[i].Stu[j].StudentID << endl;
 			
 			YearCur->CLass[i].Stu[j].Mark=new int[3];
 			for (int z=0; z<3; z++){
