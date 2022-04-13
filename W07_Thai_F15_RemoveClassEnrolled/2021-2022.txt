@@ -1,44 +1,18 @@
 2
-CSC10001
-2
+21CLC01
+3
 21127545
-Dang Quoc 
+Dang Quoc
 Thai
-21124963
-Cao Trung
+21128914
+Cao Trung 
 Kien
-CSC10002
-1
-21123015
-Vu Minh
-Quynh
-3
-PHY10003
-2
-21125386
-Nguyen Duc Anh
+21122740
+Nguyen Duc Anh 
 Tai
-21125294
-Ngo Ngoc
+2
+21CLC02
+1
+21124589
+Ngo Ngoc 
 Lien
-VPT10459
-3
-21128201
-Hoang Anh 
-Tra
-21123951
-Vo Trung
-Tin
-21123810
-Nguyen Le Tuan 
-Phuc
-CSC20002
-1
-21127672
-Nguyen Vu Tuong 
-An
-1
-CSC30002
-21122468
-Ho Khanh
-Duy
