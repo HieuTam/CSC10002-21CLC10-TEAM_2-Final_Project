@@ -2,7 +2,7 @@
 void ViewScoreboardForStudent(Schoolyear* YearCur, int x)
 {
 	clear();
-	int CurClass = (x / 100) + 1;
+	int CurClass = (x / 100) - 1;
 	int CurID = (x % 100) - 1;
 	Course* Cur = YearCur->CLass[CurClass].Stu[CurID].Registered;
 	gotoxy(1, 2);

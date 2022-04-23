@@ -6,6 +6,7 @@ void LoadScoreboard(Course* CourseHead, Schoolyear* YearCur)
 	Course* CourseCur = CourseHead;
 	Data* InfoCur = nullptr;
 	cout << "Input course ID: ";
+	cin.ignore(1000, '\n');
 	getline(cin, CourseID);
 	input.open(CourseID + ".csv", ifstream::in);
 	if (!input.is_open())
@@ -26,7 +27,7 @@ void LoadScoreboard(Course* CourseHead, Schoolyear* YearCur)
 				return;
 			}
 
-			if (CourseCur->DataOfStu = nullptr)
+			if (CourseCur->DataOfStu == nullptr)
 			{
 				cout << "Somehow there is no student in this course?";
 				return;
@@ -44,7 +45,7 @@ void LoadScoreboard(Course* CourseHead, Schoolyear* YearCur)
 				getline(input, InfoCur->Score.Other);
 
 
-				Course* EnrollList = YearCur->CLass[InfoCur->StuClass].Stu[InfoCur->IDInClass].Registered;
+				Course* EnrollList = YearCur->CLass[InfoCur->j].Stu[InfoCur->k].Registered;
 
 				while (EnrollList != nullptr && EnrollList->CourseID != CourseCur->CourseID)
 				{
@@ -58,12 +59,14 @@ void LoadScoreboard(Course* CourseHead, Schoolyear* YearCur)
 					EnrollList->Score.Midterm = InfoCur->Score.Midterm;
 					EnrollList->Score.Other = InfoCur->Score.Other;
 				}
-
+				
 				InfoCur = InfoCur->pNext;
 
 			}
 			if (InfoCur == nullptr) cout << "Imported successfully";
 			else cout << "Imported fail";
+			system("pause");
+			break;
 		}
 
 	}

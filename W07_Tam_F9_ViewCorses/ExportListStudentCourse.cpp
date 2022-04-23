@@ -6,7 +6,7 @@ void ExportListStudentCourse(Course* CourseHead)
 	cout << "Input course ID: ";
 	getline(cin, CourseID);
 	output.open(CourseID + ".csv", ofstream::out);
-	while (CourseCur != nullptr && CourseCur->CourseID != CourseID)
+	while (CourseCur != nullptr && CourseCur->CkourseID != CourseID)
 	{
 		CourseCur = CourseCur->pNext;
 	}
@@ -24,7 +24,5 @@ void ExportListStudentCourse(Course* CourseHead)
 		if (InfoCur == nullptr) cout << "Export successfully!";
 		else cout << "Export fail";
 	}
-	
-	cout << "Hello world!!!";
 
 }
