@@ -112,9 +112,9 @@ void InputStudents(Student*& St, int& NumOfStu);
 
 int CheckLogin(string username, string password, Schoolyear*& YearCur, teacher* Staff, int NumOfStaff, Student* stu, int NumOfStu);
 
-void ViewInfo(int x, Schoolyear* YearCur, teacher* Staff);
+void ViewInfo(int x, Student* Stu, teacher* Staff);
 
-void ChangePassword(Schoolyear* YearCur, teacher* Staff, int x, int NumOfStaff);
+void ChangePassword(Student* Stu, teacher* Staff, int x, int NumOfStaff, int NumofStu);
 
 void AddNewSemester(Schoolyear*& YearCur, int& x);
 

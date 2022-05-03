@@ -302,7 +302,7 @@ void InputStudents(Student*& St, int& NumOfStu)
 
 }
 
-void ViewInfo(int x, Schoolyear* YearCur, teacher* Staff)
+void ViewInfo(int x, Student* Stu, teacher* Staff)
 {
 	if (x < 100)
 	{
@@ -315,24 +315,32 @@ void ViewInfo(int x, Schoolyear* YearCur, teacher* Staff)
 	}
 	else
 	{
+		// getline(in, St[i].Surname, ',');
+		// getline(in, St[i].Name, ',');
+		// getline(in, St[i].Gender, ',');
+		// getline(in, St[i].ID, ',');
+		// getline(in, St[i].StudentID, ',');
+		// getline(in, St[i].PassWord);
 		gotoxy(40, 10);
-		cout << "Fullname: " << YearCur->CLass[x / 100 - 1].Stu[x % 100 - 1].Surname << YearCur->CLass[x / 100 - 1].Stu[x % 100 - 1].Name << endl;
-		gotoxy(40, 11);
-		cout << "Class: " << YearCur->CLass[x / 100 - 1].NameOfClass << endl;
-		gotoxy(40, 12);
-		cout << "Student ID: " << YearCur->CLass[x / 100 - 1].Stu[x % 100 - 1].StudentID << endl;
-		gotoxy(40, 13);
-		cout << "date of Birth: " << YearCur->CLass[x / 100 - 1].Stu[x % 100 - 1].DOB << endl;
+		cout << "Fullname: " << Stu[x / 100 - 1].Surname << " " << Stu[x / 100 - 1].Name << endl;
+		// gotoxy(40, 11);
+		// cout << "Class: " << YearCur->CLass[x / 100 - 1].NameOfClass << endl;
+		// gotoxy(40, 12);
+		// cout << "Student ID: " << YearCur->CLass[x / 100 - 1].Stu[x % 100 - 1].StudentID << endl;
+		// gotoxy(40, 13);
+		// cout << "date of Birth: " << YearCur->CLass[x / 100 - 1].Stu[x % 100 - 1].DOB << endl;
 		gotoxy(40, 14);
-		cout << "Gender: " << YearCur->CLass[x / 100 - 1].Stu[x % 100 - 1].Gender << endl;
+		cout << "Gender: " << Stu[x / 100 - 1].Gender << endl;
 		gotoxy(40, 15);
-		cout << "Social ID: " << YearCur->CLass[x / 100 - 1].Stu[x % 100 - 1].ID << endl;
+		cout << "Social ID: " << Stu[x / 100 - 1].ID << endl;
 		gotoxy(40, 16);
-		cout << "Password" << YearCur->CLass[x / 100 - 1].Stu[x % 100 - 1].PassWord << endl;
+		cout << "Student ID: " << Stu[x / 100 - 1].StudentID << endl;
+		gotoxy(40, 17);
+		cout << "Password: " << Stu[x / 100 - 1].PassWord << endl;
 	}
 }
 //gotoxy xong
-void ChangePassword(Schoolyear* YearCur, teacher* Staff, int x, int NumOfStaff)
+void ChangePassword(Student* Stu, teacher* Staff, int x, int NumOfStaff, int NumOfStu)
 {
 	string password;
 	while (true)
@@ -356,7 +364,7 @@ void ChangePassword(Schoolyear* YearCur, teacher* Staff, int x, int NumOfStaff)
 		else break;
 	}
 	if (x < 100) Staff[x - 1].PassWord = password;
-	else YearCur->CLass[x / 100 - 1].Stu[x % 100 - 1].PassWord = password;
+	else Stu[x / 100 - 1].PassWord = password;
 	if (x < 100)
 	{
 		ofstream out("StaffData.csv", ios::trunc);
@@ -368,13 +376,22 @@ void ChangePassword(Schoolyear* YearCur, teacher* Staff, int x, int NumOfStaff)
 	}
 	else
 	{
-		ofstream out(YearCur->CLass[x / 100 - 1].NameOfClass + ".csv", ios::trunc);
-		out << YearCur->CLass[x / 100 - 1].NumOfStudent << ",,,,,,," << endl;
-		for (int i = 0; i < YearCur->CLass[x / 100 - 1].NumOfStudent; i++)
+		// ofstream out(YearCur->CLass[x / 100 - 1].NameOfClass + ".csv", ios::trunc);
+		// out << YearCur->CLass[x / 100 - 1].NumOfStudent << ",,,,,,," << endl;
+		// for (int i = 0; i < YearCur->CLass[x / 100 - 1].NumOfStudent; i++)
+		// {
+		// 	out << YearCur->CLass[x / 100 - 1].Stu[i].Num << "," << YearCur->CLass[x / 100 - 1].Stu[i].StudentID << "," << YearCur->CLass[x / 100 - 1].Stu[i].Surname << ","
+		// 		<< YearCur->CLass[x / 100 - 1].Stu[i].Name << "," << YearCur->CLass[x / 100 - 1].Stu[i].Gender << "," << YearCur->CLass[x / 100 - 1].Stu[i].DOB << ","
+		// 		<< YearCur->CLass[x / 100 - 1].Stu[i].ID << "," << YearCur->CLass[x / 100 - 1].Stu[i].PassWord << endl;
+		// }
+		ofstream out("StudentData.csv", ios::trunc);
+		// out << YearCur->CLass[x / 100 - 1].NumOfStudent << ",,,,,,," << endl;
+		out << NumOfStu << ",,,,," << endl;
+		for (int i = 0; i < NumOfStu; i++)
 		{
-			out << YearCur->CLass[x / 100 - 1].Stu[i].Num << "," << YearCur->CLass[x / 100 - 1].Stu[i].StudentID << "," << YearCur->CLass[x / 100 - 1].Stu[i].Surname << ","
-				<< YearCur->CLass[x / 100 - 1].Stu[i].Name << "," << YearCur->CLass[x / 100 - 1].Stu[i].Gender << "," << YearCur->CLass[x / 100 - 1].Stu[i].DOB << ","
-				<< YearCur->CLass[x / 100 - 1].Stu[i].ID << "," << YearCur->CLass[x / 100 - 1].Stu[i].PassWord << endl;
+			out << Stu[i].Surname << ","
+				<< Stu[i].Name << "," << Stu[i].Gender << "," 
+				<< Stu[i].ID << "," << Stu[i].StudentID << "," << Stu[i].PassWord << endl;
 		}
 	}
 	gotoxy(51, 17);

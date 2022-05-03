@@ -158,13 +158,13 @@ int main()
 			{
 			case 1:
 			{
-				ViewInfo(x, YearCur1, Staff);
+				ViewInfo(x, Stu, Staff);
 				Back();
 				break;
 			}
 			case 2:
 			{
-				ChangePassword(YearCur1, Staff, x, NumOfStaff);
+				ChangePassword(Stu, Staff, x, NumOfStaff, NumOfStu);
 				Back();
 				break;
 			}
