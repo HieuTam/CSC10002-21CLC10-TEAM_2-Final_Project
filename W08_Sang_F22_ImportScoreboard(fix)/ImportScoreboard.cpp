@@ -59,7 +59,7 @@ void LoadScoreboard(Course* CourseHead, Schoolyear* YearCur)
 					EnrollList->Score.Midterm = InfoCur->Score.Midterm;
 					EnrollList->Score.Other = InfoCur->Score.Other;
 				}
-
+				
 				InfoCur = InfoCur->pNext;
 
 			}

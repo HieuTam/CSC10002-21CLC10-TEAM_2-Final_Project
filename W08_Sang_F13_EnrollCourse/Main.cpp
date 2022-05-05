@@ -1,4 +1,5 @@
 #include "Header_Test2.h"
+#include "Sub.cpp"
 int main()
 {
 	Student* Stu = nullptr;
@@ -30,21 +31,21 @@ int main()
 	if (x != 0)
 	cin >> choice;
 	while (choice)
-	{
-		if (choice == 1)
-		{
-			for (int i=0;i<YearHead->NumOfClass;i++)
-			LoadScoreboard(CourseHead, YearHead);
-			ViewScoreboardForStudent(YearHead, x);
-		}
-		else if (choice == 2)
+	// {
+	// 	if (choice == 1)
+	// 	{
+	// 		for (int i=0;i<YearHead->NumOfClass;i++)
+	// 		LoadScoreboard(CourseHead, YearHead);
+	// 		ViewScoreboardForStudent(YearHead, x);
+	// 	}
+	// 	else if (choice == 2)
 		{
 			CourseEnroll(YearHead, CourseHead, x, n);
 		}
-		else if (choice==3)
-		{
-			ViewListEnrolled(YearHead, x);
-		}
+		// else if (choice==3)
+		// {
+		// 	ViewListEnrolled(YearHead, x);
+		// }
 		cin >> choice;
 	}
 	delete[]Stu;
