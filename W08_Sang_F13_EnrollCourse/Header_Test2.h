@@ -29,6 +29,7 @@ struct Data
 {
 	string StudentID, Surname, Name;
 	int StuClass, IDInClass;// j,k in header.h
+	int j, k; 
 	Data* pNext=nullptr;
 	Mark Score;
 };

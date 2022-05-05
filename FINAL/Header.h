@@ -136,9 +136,9 @@ bool CheckdateEndSemester(date Today, date EndSem);
 
 bool CheckImport(Schoolyear* YearCur, int x);
 
-void CourseEnroll(Schoolyear* YearCur, Course* CourseHead, int x, int& NumOfOpt);
+void CourseEnroll(Schoolyear* YearCur, Course* CourseHead, int x, int& NumOfOpt, string username);
 //
-//void ViewListEnrolled(Schoolyear* YearCur, int x);
+void ViewListEnrolled(Schoolyear* YearCur, int x, string username);
 //
 //void RemoveCourseEnrolled(Schoolyear* YearCur, Course* CourseHead, int x);
 //

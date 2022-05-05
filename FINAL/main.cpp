@@ -11,15 +11,20 @@ int main()
 	date Today;
 	string username, password;
 	int NumOfStaff, sem = 0,NumOfStu;
-	Now(Today);
+	// Now(Today);
 	
+	int classNo = 0;
+	int studentNo = 0;
+
 	InputStaff(Staff, NumOfStaff);
 	InputStudents(Stu, NumOfStu);
-	clear(); // ham xoa man hinh
+	// clear(); // ham xoa man hinh
 	do
 	{
+		Now_real(Today);
+		// system("cls"); 
 		clear();
-		Now(Today);
+		
 		InputUserAndPW(username, password);
 		int x = CheckLogin(username, password, YearCur1, Staff, NumOfStaff, Stu, NumOfStu);
 		if (x == 0)
@@ -32,6 +37,7 @@ int main()
 			continue;
 		}
 		else if(x>=100) {
+			// Now(Today);
 			clear();
 			cout << "This is student" << endl;
 		}
@@ -41,6 +47,7 @@ int main()
 			cout << "LOGIN SUCCESSFULLY." << endl;
 
 		}
+		
 		string* str;
 		int k;
 		if (x < 100)k = 9; // khi k=9 la chuc nang cua staff
@@ -50,7 +57,9 @@ int main()
 			/*if (CheckdateRegister(Today, YearCur2->Sem[sem].StartReg, YearCur2->Sem[sem].EndReg)) k = 6;
 			else k = 4;
 			if (CheckImport(YearCur1, x)) k = 5;*/
+			
 		}
+
 		str = new string[k];
 		str[0] = "Log out";
 		str[1] = "View info";
@@ -185,12 +194,31 @@ int main()
 				}
 				else
 				{
-					if (CheckdateRegister(Today, YearCur2->Sem[sem].StartReg, YearCur2->Sem[sem].EndReg))
-						CourseEnroll(YearCur1, YearCur2->Sem[sem].pCourse, x, YearCur1->CLass[x / 100 - 1].Stu[x % 100 - 1].NumOfOpt);
+					classNo = 0;
+					studentNo = 0;
+					Schoolyear* yearTemp = YearHead;
+					while(yearTemp != nullptr && yearTemp->CLass[classNo].Stu[studentNo].StudentID != username){
+						studentNo++; 
+						if(yearTemp->CLass[classNo].NumOfStudent == studentNo){
+							studentNo = 0; 
+							classNo++; 
+
+						}
+						if(yearTemp->NumOfClass == classNo){
+							classNo = 0;
+							yearTemp = yearTemp->YearNext; 
+						}
+					}  
+					if (CheckdateRegister(Today, YearCur2->Sem[sem].StartReg, YearCur2->Sem[sem].EndReg)){
+						// CourseEnroll(YearCur1, YearCur2->Sem[sem].pCourse, x, YearCur1->CLass[x / 100 - 1].Stu[x % 100 - 1].NumOfOpt);
+						CourseEnroll(YearCur1, YearCur2->Sem[sem].pCourse, x, YearCur1->CLass[classNo].Stu[studentNo].NumOfOpt, username);
+						Back(); 
+					}
 					else
 					{
 						int t, i;
-						ViewCourse(YearCur1->CLass[x / 100 - 1].Stu[x % 100 - 1].Registered, t, i);
+						// ViewCourse(YearCur1->CLass[x / 100 - 1].Stu[x % 100 - 1].Registered, t, i);
+						ViewCourse(YearCur1->CLass[classNo].Stu[studentNo].Registered, t, i);
 						Back();
 					}
 				}
@@ -207,7 +235,21 @@ int main()
 				else
 				{
 					int t, i;
-					ViewCourse(YearCur1->CLass[x / 100 - 1].Stu[x % 100 - 1].Registered, t, i);
+					ViewCourse(YearCur1->CLass[classNo].Stu[studentNo].Registered, t, i);
+					
+					int choice; 
+					do{
+						cout << endl << "Do you want to remove a course? (0 - NO, 1 - YES): ";
+						cin >> choice; 
+						if(choice == 1){
+							clear();
+							ViewCourse(YearCur1->CLass[classNo].Stu[studentNo].Registered, t, i); 
+							RemoveCourseEnrolled(YearCur1, YearCur2->Sem[sem].pCourse, x, username); 
+						}
+					}while(choice == 1);
+					
+
+					// ViewListEnrolled(YearCur2, x, username);
 					Back();
 				}
 				break;
@@ -334,33 +376,34 @@ int main()
 							Back();
 							break;
 						}
-						//case 5:
-						//{
-						//	ExportListStudentCourse(YearCur2->Sem[sem].pCourse);
-						//	break;
-						//}
-						//case 6:
-						//{
-						//	LoadScoreboard(YearCur2->Sem[sem].pCourse, YearHead);
-						//	Back();
-						//	break;
-						//}
-						//case 7:
-						//{
-						//	ViewScoreboardCourse(YearCur2->Sem[sem].pCourse);
-						//	Back();
-						//	break;
-						//}
-						//case 8:
-						//{
-						//	//Export list � students in a course
-						//	break;
-						//}
-						//case 9:
-						//{
-						//	//Import the scoreboard
-						//	break;
-						//}
+						case 5:
+						{
+							ExportListStudentCourse(YearCur2->Sem[sem].pCourse);
+							break;
+						}
+						case 6:
+						{
+							LoadScoreboard(YearCur2->Sem[sem].pCourse, YearHead);
+							Back();
+							break;
+						}
+						case 7:
+						{
+							ViewScoreboardCourse(YearCur2->Sem[sem].pCourse);
+							Back();
+							break;
+						}
+						// case 8:
+						// {
+						// 	//Export list of students in a course
+
+						// 	break;
+						// }
+						// case 9:
+						// {
+						// 	//Import the scoreboard
+						// 	break;
+						// }
 						}
 					}
 					delete[]str1;
@@ -379,7 +422,7 @@ int main()
 				Back();
 				break;
 			}
-			/*case 7:
+			case 7:
 			{
 				ViewListStudentInClass(YearHead);
 				Back();
@@ -391,7 +434,7 @@ int main()
 				Back();
 
 				break;
-			}*/
+			}
 			case 0:
 			{
 				YearCur1 = YearHead;

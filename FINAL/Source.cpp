@@ -365,6 +365,7 @@ void ChangePassword(Student* Stu, teacher* Staff, int x, int NumOfStaff, int Num
 	}
 	if (x < 100) Staff[x - 1].PassWord = password;
 	else Stu[x / 100 - 1].PassWord = password;
+	// YearCur->CLass[x / 100 - 1].Stu[i].PassWord = password; 
 	if (x < 100)
 	{
 		ofstream out("StaffData.csv", ios::trunc);
@@ -393,6 +394,7 @@ void ChangePassword(Student* Stu, teacher* Staff, int x, int NumOfStaff, int Num
 				<< Stu[i].Name << "," << Stu[i].Gender << "," 
 				<< Stu[i].ID << "," << Stu[i].StudentID << "," << Stu[i].PassWord << endl;
 		}
+	
 	}
 	gotoxy(51, 17);
 	txtColor(2);
@@ -737,13 +739,26 @@ void DeleteCourse(Schoolyear*& YearCur, int sem)
 	}
 }
 
-void Now(date& Today)
+void Now_real(date& Today)
 {
 	time_t now = time(0);
 	tm* ltm = localtime(&now);
 	Today.year = 1900 + ltm->tm_year;
 	Today.month = 1 + ltm->tm_mon;
 	Today.day = ltm->tm_mday;
+}
+
+void Now(date& Today)
+{
+	string date; 
+	//01 2 34 5 6789
+	cout << "Today date (dd/mm/yyyy): "; 
+	cin >> date; 
+
+
+	Today.year = (int)date[6] * 1000 + (int)date[7] * 100 + (int)date[8] * 10 + (int)date[9] - 53328; 
+	Today.month = (int)date[3] * 10 + (int)date[4] - 528; 
+	Today.day = (int)date[0] * 10 + date[1] - 528; 
 }
 
 bool CheckdateRegister(date Today, date StartReg, date EndReg)// tham chiếu yearcur là yearcur2 
@@ -783,11 +798,25 @@ bool CheckImport(Schoolyear* YearCur, int x)
 	return true;
 }
 
-void CourseEnroll(Schoolyear* YearCur, Course* CourseHead, int x, int& NumOfOpt)
+void CourseEnroll(Schoolyear* YearCur, Course* CourseHead, int x, int& NumOfOpt, string username)
 {
+	Schoolyear* yearTemp = YearCur;
+	int m = 0, n = 0;  
+	while(yearTemp->CLass[m].Stu[n].StudentID != username){
+		n++; 
+		if(yearTemp->CLass[m].NumOfStudent == n){
+			n = 0; 
+			m++; 
+		}
+		if(yearTemp->NumOfClass == m)
+			yearTemp = yearTemp->YearNext; 
+	}
+
 	int opt;
-	int j = (x / 100) - 1;
-	int k = (x % 100) - 1;
+	// int j = (x / 100) - 1;
+	// int k = (x % 100) - 1;
+	int j = m; 
+	int k = n;
 	Course* ListEnroll = YearCur->CLass[j].Stu[k].Registered;
 	while (ListEnroll != nullptr && ListEnroll->pNext != nullptr)
 	{
@@ -964,15 +993,146 @@ void CourseEnroll(Schoolyear* YearCur, Course* CourseHead, int x, int& NumOfOpt)
 	}
 }
 
-//void ViewListEnrolled(Schoolyear* YearCur, int x)
-//{
+void ViewListEnrolled(Schoolyear* YearCur, int x, string username)
+{
+	clear();
+	Schoolyear* yearTemp = YearCur;
+	int m = 0, n = 0;  
+	while(yearTemp->CLass[m].Stu[n].StudentID != username){
+		n++; 
+		if(yearTemp->CLass[m].NumOfStudent == n){
+			n = 0; 
+			m++; 
+		}
+		if(yearTemp->NumOfClass == m)
+			yearTemp = yearTemp->YearNext; 
+	}
 
-//}
+	int curClass = m;
+	int curID = n;
+	int i = 1;
+	Course* CurRegistered = YearCur->CLass[curClass].Stu[curID].Registered;
+	if (CurRegistered == nullptr) cout << "No course registered ";
+	else
+	{
+		int y = 10;
+		gotoxy(1, y);
+		cout << '#';
+		gotoxy(7, y);
+		cout << "Course ID";
+		gotoxy(26, y);
+		cout << "Name of course";
+		gotoxy(54, y);
+		cout << "Teacher";
+		gotoxy(69, y);
+		cout << "Credits";
+		gotoxy(81, y);
+		cout << "Session";
 
-//void RemoveCourseEnrolled(Schoolyear* YearCur, Course* CourseHead, int x)
-//{
-//	
-//}
+		while (CurRegistered)
+		{
+			int a = 1; y++;
+			gotoxy(a, y);
+			cout << i;
+			a += 7;
+			gotoxy(a, y);
+			a += 12;
+			cout << CurRegistered->CourseID;
+			gotoxy(a, y);
+			a = a + 30;
+			cout << CurRegistered->NameOfCourse;
+			gotoxy(a, y);
+			a = a + 10;
+			cout << CurRegistered->NameOfteacher;
+			gotoxy(a, y);
+			a = a + 22;
+			cout << CurRegistered->NumOfCredit;
+			gotoxy(a, y);
+			cout << "Thu " << CurRegistered->Day1 << "Thoi gian: " << CurRegistered->Session1;
+			y++;
+			gotoxy(a, y);
+			cout << "Thu " << CurRegistered->Day2 << "Thoi gian: " << CurRegistered->Session2;
+			i++; y++;
+			CurRegistered = CurRegistered->pNext;
+		}
+	}
+}
+
+void RemoveCourseEnrolled(Schoolyear* YearCur, Course* CourseHead, int x, string username)
+{
+	// if (x==0) return;
+	string CourseID;
+	// name, surname, StudentID, ClassID;
+	int choice;
+	// cout << "Enter student's surname: ";
+	// getline(cin, surname);
+	// cout << "Enter student's name: ";
+	// getline(cin, name);
+	// cout << "Enter student's id";
+	// getline(cin, StudentID);
+	// for (int i=0; i<YearCur->NumOfClass; i++){
+	// 	for (int j=0; j<YearCur->CLass[i].NumOfStudent; j++){
+	Schoolyear* yearTemp = YearCur;
+	int m = 0, n = 0;  
+	while(yearTemp->CLass[m].Stu[n].StudentID != username){
+		n++; 
+		if(yearTemp->CLass[m].NumOfStudent == n){
+			n = 0; 
+			m++; 
+		}
+		if(yearTemp->NumOfClass == m)
+			yearTemp = yearTemp->YearNext; 
+	}
+	int i = m; 
+	int j = n; 
+
+	{
+		cout << endl << "Please enter the course you want to remove " << endl;
+		getline(cin, CourseID);
+		Course *pCur=YearCur->CLass[i].Stu[j].Registered;
+		while (pCur && pCur->CourseID != CourseID){
+			pCur=pCur->pNext;
+		}
+		
+		if (pCur){
+			cout << endl << "Are you really sure you want to remove this course? (YES - 1, NO - 0): " ;
+			cin >> choice;
+			if (choice == 1){
+				Course *tmp=pCur;
+				pCur = pCur->pNext;
+				delete tmp;
+				// break;
+			}
+			
+			else{
+				cout << endl << "You didn't remove the enrolled course" << endl;
+				return;
+			}
+		}
+		else {
+			cout << endl << "No courses found!!" << endl;
+			return;
+		}
+	}	
+	Course *CourseCur=CourseHead;
+	while (CourseCur && CourseCur->CourseID!=CourseID){
+		CourseCur=CourseCur->pNext;
+	}
+	
+	if (CourseCur){
+		Data *InfoCur=CourseCur->DataOfStu;
+		// while (InfoCur && (InfoCur->StudentID!=StudentID || InfoCur->Name!=name || InfoCur->Surname!=surname)){
+		// 	InfoCur=InfoCur->pNext;
+		// }
+		{
+			Data *tmp=InfoCur;
+			InfoCur=InfoCur->pNext;
+			delete tmp;
+			cout << "Remove from course successfully!!!" << endl;
+		}
+	
+	}
+}
 
 void ViewListClasses(Schoolyear* YearCur)
 {
@@ -1119,7 +1279,7 @@ void ViewListStudentInCourse(Schoolyear* YearCur, int sem)
 					clear();
 					int k = 1;
 					gotoxy(40, 9);
-					cout << "NUM  STUDENT ID  NAME";
+					cout << "NUM STUDENT ID\tNAME";
 					while (k <= CourseCur->NumOfStu / 2)
 					{
 						gotoxy(40, k + 10);
@@ -1135,7 +1295,7 @@ void ViewListStudentInCourse(Schoolyear* YearCur, int sem)
 					clear();
 					int k = CourseCur->NumOfStu / 2 + 1;
 					gotoxy(40, 9);
-					cout << "NUM  STUDENT ID  NAME";
+					cout << "NUM STUDENT ID\tNAME";
 					while (k <= CourseCur->NumOfStu)
 					{
 						gotoxy(40, k + 10 - CourseCur->NumOfStu / 2 - 1);
