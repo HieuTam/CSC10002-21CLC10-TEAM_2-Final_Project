@@ -1415,13 +1415,14 @@ void LoadScoreboard(Course*& CourseHead, Schoolyear*& YearCur)
 
 void ViewScoreboardCourse(Course* CourseHead)
 {
-	string NameOfCourse;
+	// string NameOfCourse;
+	string CourseID; 
 	Course* CourseCur = CourseHead;
 	Data* InfoCur = nullptr;
-	cout << "Input name of course: ";
+	cout << "Input ID of course: ";
 	cin.ignore();
-	getline(cin, NameOfCourse);
-	while (CourseCur != nullptr && CourseCur->NameOfCourse != NameOfCourse)
+	getline(cin, CourseID);
+	while (CourseCur != nullptr && CourseCur->CourseID != CourseID)
 	{
 		CourseCur = CourseCur->pNext;
 	}

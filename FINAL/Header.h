@@ -128,7 +128,9 @@ void SaveInfoCourse(Schoolyear* YearCur, int sem);
 
 void DeleteCourse(Schoolyear*& YearCur, int sem);
 
-void Now(date& Today);
+void Now_real(date& Today);
+
+void Now(date& Today); 
 
 bool CheckdateRegister(date Today, date StartReg, date EndReg);
 
@@ -140,24 +142,24 @@ void CourseEnroll(Schoolyear* YearCur, Course* CourseHead, int x, int& NumOfOpt,
 //
 void ViewListEnrolled(Schoolyear* YearCur, int x, string username);
 //
-//void RemoveCourseEnrolled(Schoolyear* YearCur, Course* CourseHead, int x);
+void RemoveCourseEnrolled(Schoolyear* YearCur, Course* CourseHead, int x, string username);
 //
 void ViewListClasses(Schoolyear* YearCur);
 //
-//void ViewListStudentInClass(Schoolyear* YearCur);
+void ViewListStudentInClass(Schoolyear* YearCur);
 //
-//void ViewListStudentInCourse(Schoolyear* YearCur, int sem);
+void ViewListStudentInCourse(Schoolyear* YearCur, int sem);
 //
-//void ExportListStudentCourse(Course* CourseHead);
+void ExportListStudentCourse(Course* CourseHead);
 //
-//void LoadScoreboard(Course*& CourseHead, Schoolyear*& YearCur);
+void LoadScoreboard(Course*& CourseHead, Schoolyear*& YearCur);
 //
-//void ViewScoreboardCourse(Course* CourseHead);
+void ViewScoreboardCourse(Course* CourseHead);
 //
-//void ViewScoreboardClass(Schoolyear* YearCur, int x);
+void ViewScoreboardClass(Schoolyear* YearCur, int x);
 //
-//void ViewScoreboardStu(Schoolyear* YearCur, int x);
+void ViewScoreboardStu(Schoolyear* YearCur, int x);
 //
-//void UpdateStudentResult(Schoolyear*& YearCur, Course*& CourseHead);
+void UpdateStudentResult(Schoolyear*& YearCur, Course*& CourseHead);
 
 #endif
